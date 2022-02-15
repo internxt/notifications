@@ -8,6 +8,7 @@
     "@socket.io/redis-adapter": "^7.1.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
     "redis": "^4.0.3",
     "socket.io": "^4.4.1"
   },
@@ -21,6 +22,7 @@
     "@internxt/eslint-config-internxt": "^1.0.4",
     "@internxt/prettier-config": "^1.0.2",
     "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^17.0.18",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
