@@ -8,8 +8,10 @@ import { createClient } from 'redis';
 
 import registerAuthSocketMiddleware from './auth-socket-middleware';
 import registerAuthApiMiddleware from './auth-api-middleware';
+import registerHandler from './handler';
 
 const app = express();
+app.use(express.json());
 const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
@@ -26,6 +28,8 @@ if (process.env.NODE_ENV === 'production') {
 
 registerAuthSocketMiddleware(io);
 registerAuthApiMiddleware(app);
+
+registerHandler(app, io);
 
 const { PORT } = process.env;
 
