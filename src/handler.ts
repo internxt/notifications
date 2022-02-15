@@ -2,7 +2,7 @@ import type { Express } from 'express';
 import type { Server } from 'socket.io';
 
 type RequestBody = {
-  event: 'string';
+  event: string;
   payload: any;
   email: string;
   clientId: string;
