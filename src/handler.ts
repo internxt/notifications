@@ -5,11 +5,11 @@ type RequestBody = {
   event: string;
   payload: any;
   email: string;
-  clientId: string;
+  clientId?: string;
 };
 
 function validateBody(body: Record<string, any>): RequestBody {
-  if (body.event && body.payload && body.email && body.clientId) return body as RequestBody;
+  if (body.event && body.payload && body.email) return body as RequestBody;
   throw new Error('Body is not in the expected format');
 }
 
