@@ -42,10 +42,10 @@ jobs:
         with:
           config: ${{ secrets.KUBE_CONFIG_DATA }}
           version: v1.21.5
-          command: set image --record deployment/notifications notifications=${{ secrets.DOCKERHUB_USERNAME }}/notifications:${{ github.sha }}
+          command: set image --record deployment/notifications-dp notifications=${{ secrets.DOCKERHUB_USERNAME }}/notifications:${{ github.sha }}
       - name: Verify notifications deployment
         uses: steebchen/kubectl@v2.0.0
         with:
           config: ${{ secrets.KUBE_CONFIG_DATA }}
           version: v1.21.5
-          command: rollout status deployment/notifications
+          command: rollout status deployment/notifications-dp
