@@ -8,9 +8,8 @@ export default function registerAuthSocketMiddleware(io: Server) {
 
     jwt.verify(token, process.env.JWT_SECRET as string, (err, decoded) => {
       if (err) next(new Error('Error while verifying the JWT'));
-      const payload = typeof decoded === 'string' ? JSON.parse(decoded) : decoded;
 
-      const email = typeof payload === 'string' ? payload : payload.email;
+      const email = typeof decoded === 'string' ? decoded : decoded!.email;
 
       socket.join(email);
       next();
