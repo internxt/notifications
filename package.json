@@ -17,7 +17,7 @@
     "start": "node .",
     "dev": "concurrently  \"tsc -w\" \"nodemon .\"",
     "lint": "eslint . --ext .ts",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "devDependencies": {
     "@internxt/eslint-config-internxt": "^1.0.4",
