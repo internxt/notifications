@@ -1,5 +1,6 @@
 import type { Express } from 'express';
 import type { Server } from 'socket.io';
+import Logger from './logger';
 
 type RequestBody = {
   event: string;
@@ -15,13 +16,17 @@ function validateBody(body: Record<string, any>): RequestBody {
 
 export default function registerHandler(app: Express, io: Server) {
   app.post('/', (req, res) => {
+    const logger = Logger.getInstance();
+
     let body: RequestBody;
     try {
       body = validateBody(req.body);
     } catch (err) {
-      console.log('Validation failed', (err as Error).message);
+      logger.warn('Validation failed', (err as Error).message, JSON.stringify(req.body, null, 2));
       return res.status(400).send();
     }
+
+    logger.info(`Event is going to be emited: ${JSON.stringify(body, null, 2)}`);
 
     io.to(body.email).emit('event', body);
     res.status(201).send();

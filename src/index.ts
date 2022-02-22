@@ -1,6 +1,9 @@
 import 'dotenv/config';
 import httpServer from './http-server';
+import Logger from './logger';
 
 const { PORT } = process.env;
 
-httpServer.listen(PORT, () => console.log(`Running on port ${PORT}`));
+const logger = Logger.getInstance();
+
+httpServer.listen(PORT, () => logger.info(`Running on port ${PORT}`));
