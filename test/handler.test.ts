@@ -1,10 +1,16 @@
 import 'dotenv/config';
 import request from 'supertest';
-import { app } from '../src/http-server';
+import getApp from '../src/http-server';
+import type { Express } from 'express';
 
 const validBody = { event: 'FILE_CREATED', payload: { id: 4, name: 'file' }, email: 'hello@internxt.com' };
 
 describe('handler tests', () => {
+  let app: Express;
+  beforeAll(async () => {
+    app = (await getApp()).app;
+  });
+
   it('should return 401 if no auth is used', async () => {
     await request(app).post('/').send(validBody).expect(401);
   });

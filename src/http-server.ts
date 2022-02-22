@@ -9,29 +9,32 @@ import registerAuthApiMiddleware from './auth-api-middleware';
 import registerHandler from './handler';
 import Logger from './logger';
 
-export const app = express();
-app.use(express.json());
-const httpServer = createServer(app);
+export default async function () {
+  const app = express();
+  app.use(express.json());
+  const httpServer = createServer(app);
 
-const io = new Server(httpServer, {
-  cors: {
-    origin: '*',
-  },
-});
+  const io = new Server(httpServer, {
+    cors: {
+      origin: '*',
+    },
+  });
 
-const logger = Logger.getInstance();
+  const logger = Logger.getInstance();
 
-if (process.env.NODE_ENV === 'production') {
-  logger.info('Service is running in production, the redis adapter is going to be used');
+  if (process.env.NODE_ENV === 'production') {
+    logger.info('Service is running in production, the redis adapter is going to be used');
 
-  const pubClient = createClient({ url: process.env.REDIS_URL });
-  const subClient = pubClient.duplicate();
-  io.adapter(createAdapter(pubClient, subClient));
+    const pubClient = createClient({ url: process.env.REDIS_URL });
+    const subClient = pubClient.duplicate();
+    await Promise.all([pubClient.connect(), subClient.connect()]);
+    io.adapter(createAdapter(pubClient, subClient));
+  }
+
+  registerAuthSocketMiddleware(io);
+  registerAuthApiMiddleware(app);
+
+  registerHandler(app, io);
+
+  return { httpServer, app };
 }
-
-registerAuthSocketMiddleware(io);
-registerAuthApiMiddleware(app);
-
-registerHandler(app, io);
-
-export default httpServer;
