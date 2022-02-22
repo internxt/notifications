@@ -7,6 +7,7 @@ import { createClient } from 'redis';
 import registerAuthSocketMiddleware from './auth-socket-middleware';
 import registerAuthApiMiddleware from './auth-api-middleware';
 import registerHandler from './handler';
+import Logger from './logger';
 
 export const app = express();
 app.use(express.json());
@@ -18,7 +19,11 @@ const io = new Server(httpServer, {
   },
 });
 
+const logger = Logger.getInstance();
+
 if (process.env.NODE_ENV === 'production') {
+  logger.info('Service is running in production, the redis adapter is going to be used');
+
   const pubClient = createClient({ url: process.env.REDIS_HOST, password: process.env.REDIS_PASSWORD });
   const subClient = pubClient.duplicate();
   io.adapter(createAdapter(pubClient, subClient));
