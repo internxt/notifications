@@ -24,7 +24,7 @@ const logger = Logger.getInstance();
 if (process.env.NODE_ENV === 'production') {
   logger.info('Service is running in production, the redis adapter is going to be used');
 
-  const pubClient = createClient({ url: process.env.REDIS_HOST, password: process.env.REDIS_PASSWORD });
+  const pubClient = createClient({ url: process.env.REDIS_URL });
   const subClient = pubClient.duplicate();
   io.adapter(createAdapter(pubClient, subClient));
 }
