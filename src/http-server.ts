@@ -16,7 +16,7 @@ export default async function () {
 
   const io = new Server(httpServer, {
     cors: {
-      origin: '*',
+      origin: true,
       credentials: true,
     },
   });
