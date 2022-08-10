@@ -29,7 +29,14 @@ export default function registerHandler(app: Express, io: Server) {
 
     logger.info(`Event is going to be emited: ${JSON.stringify(body, null, 2)}`);
 
-    io.to(body.email).emit('event', body);
+    if(body.email){
+      io.to(body.email).emit('event', body);
+    }
+    
+    if(body.userId){
+      io.to(body.userId).emit('event', body);
+    }
+
     res.status(201).send();
   });
 }
