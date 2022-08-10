@@ -18,10 +18,16 @@ export default function registerAuthSocketMiddleware(io: Server) {
         next(new Error());
       }
       logger.info(`Token decoded: ${decoded}`);
-      const email = typeof decoded === 'string' ? decoded : decoded!.email;
 
-      logger.info(`${email} is listening notifications`);
-      socket.join(email);
+      if (decoded && typeof decoded !== 'string' && decoded.userId) {
+        logger.info(`userId: ${decoded.userId} is listening notifications`);
+        socket.join(decoded.userId);
+      } else {
+        const email = typeof decoded === 'string' ? decoded : decoded!.email;
+        logger.info(`email: ${email} is listening notifications`);
+        socket.join(email);
+      }
+
       next();
     });
   });
