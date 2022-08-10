@@ -5,12 +5,13 @@ import Logger from './logger';
 type RequestBody = {
   event: string;
   payload: any;
-  email: string;
+  email?: string;
+  userId?: string;
   clientId?: string;
 };
 
 function validateBody(body: Record<string, any>): RequestBody {
-  if (body.event && body.payload && body.email) return body as RequestBody;
+  if (body.event && body.payload && (body.email || body.userId)) return body as RequestBody;
   throw new Error('Body is not in the expected format');
 }
 
@@ -28,7 +29,14 @@ export default function registerHandler(app: Express, io: Server) {
 
     logger.info(`Event is going to be emited: ${JSON.stringify(body, null, 2)}`);
 
-    io.to(body.email).emit('event', body);
+    if(body.email){
+      io.to(body.email).emit('event', body);
+    }
+    
+    if(body.userId){
+      io.to(body.userId).emit('event', body);
+    }
+
     res.status(201).send();
   });
 }
