@@ -17,11 +17,17 @@ export default function registerAuthSocketMiddleware(io: Server) {
         logger.warn(`Failed to verify a token, error: ${JSON.stringify(err, null, 2)}`);
         next(new Error());
       }
-      logger.info(`Token decoded: ${decoded}`);
+      logger.info(`Token decoded: ${JSON.stringify(decoded, null, 2)}`);
 
-      if (decoded && typeof decoded !== 'string' && decoded.userId) {
-        logger.info(`userId: ${decoded.userId} is listening notifications`);
-        socket.join(decoded.userId);
+      if (
+        decoded && 
+        typeof decoded !== 'string' && 
+        decoded.payload && 
+        decoded.payload.uuid
+      ) {
+        const uuid = decoded.payload.uuid;
+        logger.info(`user: ${uuid} is listening notifications`);
+        socket.join(uuid);
       } else {
         const email = typeof decoded === 'string' ? decoded : decoded!.email;
         logger.info(`email: ${email} is listening notifications`);
