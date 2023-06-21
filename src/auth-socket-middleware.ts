@@ -1,5 +1,5 @@
 import type { Server } from 'socket.io';
-import jwt from 'jsonwebtoken';
+import jwt, { Jwt } from 'jsonwebtoken';
 import Logger from './logger';
 
 export default function registerAuthSocketMiddleware(io: Server) {
@@ -7,6 +7,7 @@ export default function registerAuthSocketMiddleware(io: Server) {
     const logger = Logger.getInstance();
 
     const token: string = socket.handshake.auth.token;
+
     if (!token) {
       logger.warn('A socket connection was tried but lacked the token');
       next(new Error());
@@ -19,17 +20,9 @@ export default function registerAuthSocketMiddleware(io: Server) {
       }
       logger.info(`Token decoded: ${JSON.stringify(decoded, null, 2)}`);
 
-      if (
-        decoded && 
-        typeof decoded !== 'string' && 
-        decoded.payload && 
-        decoded.payload.uuid
-      ) {
-        const uuid = decoded.payload.uuid;
-        logger.info(`user: ${uuid} is listening notifications`);
-        socket.join(uuid);
-      } else {
-        const email = typeof decoded === 'string' ? decoded : decoded!.email;
+      const jwtPayload = (decoded as Jwt)?.payload;
+      if (typeof jwtPayload === 'object' && jwtPayload.email) {
+        const email = jwtPayload.email;
         logger.info(`email: ${email} is listening notifications`);
         socket.join(email);
       }
