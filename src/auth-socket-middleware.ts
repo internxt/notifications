@@ -1,5 +1,5 @@
 import type { Server } from 'socket.io';
-import jwt, { Jwt } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import Logger from './logger';
 
 export default function registerAuthSocketMiddleware(io: Server) {
