@@ -20,12 +20,9 @@ export default function registerAuthSocketMiddleware(io: Server) {
       }
       logger.info(`Token decoded: ${JSON.stringify(decoded, null, 2)}`);
 
-      const jwtPayload = (decoded as Jwt)?.payload;
-      if (typeof jwtPayload === 'object' && jwtPayload.email) {
-        const email = jwtPayload.email;
-        logger.info(`email: ${email} is listening notifications`);
-        socket.join(email);
-      }
+      const email = typeof decoded === 'string' ? decoded : decoded?.payload.email;
+      logger.info(`email: ${email} is listening notifications`);
+      socket.join(email);
 
       next();
     });
