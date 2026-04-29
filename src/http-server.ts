@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { createAdapter } from '@socket.io/redis-adapter';
@@ -9,16 +10,39 @@ import registerAuthApiMiddleware from './auth-api-middleware';
 import registerHandler from './handler';
 import Logger from './logger';
 
+function getAllowedOrigins(): string[] | RegExp[] | boolean | (string | RegExp)[] {
+  const log = Logger.getInstance();
+  const originsEnv = process.env.ALLOWED_ORIGINS;
+
+  if (!originsEnv) {
+    log.warn('ALLOWED_ORIGINS environment variable is not set, using default CORS configuration');
+    return true;
+  }
+
+  try {
+    const originsString = Buffer.from(originsEnv, 'base64').toString('utf8');
+    const allowedOrigins: string[] = JSON.parse(originsString);
+    return allowedOrigins.map((origin) => {
+      if (origin.startsWith('^') && origin.endsWith('$')) {
+        return new RegExp(origin);
+      }
+      return origin;
+    });
+  } catch (error) {
+    log.error('Using default CORS configuration. Failed to parse ALLOWED_ORIGINS:', error);
+    return true;
+  }
+}
+
 export default async function () {
   const app = express();
+  const corsOptions = { credentials: true, origin: getAllowedOrigins() };
+  app.use(cors(corsOptions));
   app.use(express.json());
   const httpServer = createServer(app);
 
   const io = new Server(httpServer, {
-    cors: {
-      origin: true,
-      credentials: true,
-    },
+    cors: corsOptions,
   });
 
   const logger = Logger.getInstance();
