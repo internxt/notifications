@@ -14,8 +14,8 @@ export default function registerAuthSocketMiddleware(io: Server) {
 
     jwt.verify(token, process.env.JWT_SECRET as string, (err, decoded) => {
       if (err) {
-        logger.warn(`Failed to verify a token, error: ${JSON.stringify(err, null, 2)}`);
-        next(new Error());
+        logger.warn(`Failed to verify a token, error: ${JSON.stringify(err, null, 2)}, token: ${JSON.stringify(decoded)}`);
+        next(err);
       }
       logger.info(`Token decoded: ${JSON.stringify(decoded, null, 2)}`);
 
