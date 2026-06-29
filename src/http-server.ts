@@ -28,6 +28,8 @@ export default async function () {
 
     const pubClient = createClient({ url: process.env.REDIS_URL });
     const subClient = pubClient.duplicate();
+    pubClient.on('error', (err: Error) => logger.error('Redis pubClient error: %O', err));
+    subClient.on('error', (err: Error) => logger.error('Redis subClient error: %O', err));
     await Promise.all([pubClient.connect(), subClient.connect()]);
     io.adapter(createAdapter(pubClient, subClient));
   }
