@@ -3,9 +3,6 @@ LABEL author="internxt"
 
 WORKDIR /usr/app
 
-# Add useful packages
-RUN apk add git curl
-
 COPY . ./
 
 # Install deps
