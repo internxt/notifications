@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:16
+FROM node:24.18.0
 LABEL author="internxt"
 
 WORKDIR /usr/app
