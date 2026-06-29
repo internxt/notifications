@@ -12,6 +12,7 @@ const winstonProdOptions: winston.LoggerOptions = {
   handleExceptions: true,
   format: combine(
     timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    splat(),
     printf((info) => {
       return JSON.stringify({
         hostname: serverHostname,
