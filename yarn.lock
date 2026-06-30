@@ -370,18 +370,18 @@
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
 "@internxt/eslint-config-internxt@^1.0.4":
-  version "1.0.4"
-  resolved "https://npm.pkg.github.com/download/@internxt/eslint-config-internxt/1.0.4/197ab3a39905e8b1441d0a67a60265df61be8f9680e08ebdd6d3e1c9e857fb32#d7c4e002c63e630307ec9a473608f3829957d470"
-  integrity sha512-4xy1yKQYIEmnLFEdwE3quhyRox7Gh1fE70kGe+s4BegENEM9vctqwQ7MeSGNSROobrLgqoRuSKdLD5nrJMwMvg==
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@internxt/eslint-config-internxt/-/eslint-config-internxt-1.0.10.tgz#19025c479f84617a59484660f2f9c983ff3bc4ec"
+  integrity sha512-58fMjE/ro/eK/b4v1UBwpDtK0PvUo6o7yULRU5LVrqe4gCE4pgruI4RUJfLJ/WprfAFDQxUgJbyQMc5TtUVjiw==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.4.0"
     "@typescript-eslint/parser" "^5.4.0"
     eslint-config-prettier "^8.3.0"
 
 "@internxt/prettier-config@^1.0.2":
-  version "1.0.2"
-  resolved "https://npm.pkg.github.com/download/@internxt/prettier-config/1.0.2/9a19de23e3330a81c0e2bace1a6a0325fc8633197cf677e44ea75e54df315b5e#5bd220b8de76734448db5475b3e0c01f9d22c19b"
-  integrity sha512-t4HiqvCbC7XgQepwWlIaFJe3iwW7HCf6xOSU9nKTV0tiGqOPz7xMtIgLEloQrDA34Cx4PkOYBXrvFPV6RxSFAA==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@internxt/prettier-config/-/prettier-config-2.0.1.tgz#a25e7a16f62a990aed2bd1804e04140cc8c33e77"
+  integrity sha512-sCnOMX7GR7BYDJ5OH1RiV/JaOBLE3uhL6QN6tYhMKi7QXK/cnM/77qmDlIEBlhTNIFEMLFljSkc0vZEvf6m2xA==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
