@@ -21,8 +21,8 @@
     "test": "jest --forceExit"
   },
   "devDependencies": {
-    "@internxt/eslint-config-internxt": "^1.0.4",
-    "@internxt/prettier-config": "^1.0.2",
+    "@internxt/eslint-config-internxt": "^2.1.0",
+    "@internxt/prettier-config": "^2.0.1",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.0",
     "@types/jsonwebtoken": "^8.5.8",
